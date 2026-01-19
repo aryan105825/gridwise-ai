@@ -9,7 +9,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    `${process.env.url}`
+    "https://gridwise-ai-cyan.vercel.app"
   ],
   methods: ["GET", "POST"]
 }));
