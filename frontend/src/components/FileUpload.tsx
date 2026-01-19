@@ -1,21 +1,42 @@
 import { useState } from "react";
-import { api } from "../services/api";
+import {api} from "../services/api";
 
-export default function FileUpload({ onData }: { onData: any }) {
+type EnergyRow = {
+  timestamp: string;
+  building_id?: string;
+  energy_kwh: number;
+  temperature_c?: number;
+  occupancy?: number;
+  hvac_status?: string;
+  lighting_status?: string;
+  equipment_status?: string;
+};
+
+type FileUploadProps = {
+  onData: (rows: EnergyRow[]) => void;
+};
+
+export default function FileUpload({ onData }: FileUploadProps) {
   const [loading, setLoading] = useState(false);
 
-  const handleUpload = async (e: any) => {
-    const file = e.target.files[0];
+  const handleUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
     if (!file) return;
 
     const formData = new FormData();
     formData.append("file", file);
 
     setLoading(true);
-        console.log(loading)
-    const res = await api.post("/upload", formData);
+
+    const res = await api.post<{ data: EnergyRow[] }>(
+      "/upload",
+      formData
+    );
+
     setLoading(false);
-    console.log(loading)
+
     onData(res.data.data);
   };
 
@@ -49,6 +70,5 @@ export default function FileUpload({ onData }: { onData: any }) {
         </p>
       )}
     </div>
-
   );
 }
