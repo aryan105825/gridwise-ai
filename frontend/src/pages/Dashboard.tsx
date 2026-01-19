@@ -16,21 +16,41 @@ export default function Dashboard({ rawData, optimizedData, result }: any) {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-20">
+    <div className="mx-auto max-w-7xl space-y-20 px-6 py-12">
       {/* 1. Energy behavior */}
-      <section>
-        <EnergyChart data={rawData} />
+      <section className="space-y-4">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-400">
+          Energy Usage Over Time
+        </h2>
+
+        <div className="rounded-2xl border border-white/10 bg-[#0b0f14] p-4 shadow-lg">
+          <EnergyChart data={rawData} />
+        </div>
       </section>
 
-      {/* 2. Comparison */}
+      {/* 2. Comparison + Impact */}
       <section className="space-y-10">
-        <ComparisonChart base={totalBase} optimized={totalOpt} />
-        <MetricsCards totals={result.totals}
-          impact={result.impact} />
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-400">
+          Optimization Impact
+        </h2>
+
+        <div className="rounded-2xl border border-white/10 bg-[#0b0f14] p-4 shadow-lg">
+          <ComparisonChart base={totalBase} optimized={totalOpt} />
+        </div>
+
+        <MetricsCards
+          totals={result.totals}
+          impact={result.impact}
+        />
+
+        <CalculationExplanation assumptions={result.assumptions} />
       </section>
-      <CalculationExplanation assumptions={result.assumptions} />
+
       {/* 3. Recommendations */}
-      <section>
+      <section className="space-y-8">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-400">
+          Optimization Insights
+        </h2>
 
         <RecommendationList recs={result.recommendations} />
 

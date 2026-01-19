@@ -78,13 +78,11 @@ export default function Home() {
         {/* Results */}
         {result && (
           <section>
-            {result && (
               <Dashboard
                 rawData={result.baseline}
                 optimizedData={result.optimized}
                 result={result}
               />
-            )}
           </section>
         )}
       </div>
